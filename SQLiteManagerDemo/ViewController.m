@@ -18,54 +18,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[SQLiteManager sharedSQLiteManager] createTable:NSStringFromClass([Person class])];
     self.person = [[Person alloc]init];
     self.person.name = @"rose";
     self.person.age = 19;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [[SQLiteManager sharedSQLiteManager] createTable:NSStringFromClass([Person class])];
-
-    NSArray *models = [Person loadPersons];
-    NSLog(@"");
-}
 
 - (IBAction)insert:(id)sender {
-    if ([self.person updatePerson]){
-        NSLog(@"SQL执行成功");
-    }
-    else{
-        NSLog(@"SQL执行失败");
-    }
+    [self Decribe:[self.person updatePerson]];
 }
 
 - (IBAction)delete:(id)sender {
-    if ([self.person updatePerson]){
-        NSLog(@"SQL执行成功");
-    }
-    else{
-        NSLog(@"SQL执行失败");
-    }
+    [self Decribe:[self.person deletePerson]];
 }
 
 - (IBAction)update:(id)sender {
-    if ([self.person updatePerson]){
-        NSLog(@"SQL执行成功");
-    }
-    else{
-        NSLog(@"SQL执行失败");
-    }
+    [self Decribe:[self.person updatePerson]];
 }
 
 - (IBAction)select:(id)sender {
-    if ([self.person updatePerson]){
-        NSLog(@"SQL执行成功");
-    }
-    else{
-        NSLog(@"SQL执行失败");
-    }
+    NSArray *models = [Person loadPersons];
+    [self Decribe:([Person loadPersons] != nil)];
 }
 
-
+- (void)Decribe:(BOOL)success{
+    if (success) NSLog(@"SQL执行成功");
+    else NSLog(@"SQL执行失败");
+}
 
 @end
